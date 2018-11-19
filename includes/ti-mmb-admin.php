@@ -5,7 +5,6 @@
  * @package ti-mega-menu-builder
  */
 
-
 /**
  * Class Ti_MMB_Admin
  *
@@ -65,8 +64,8 @@ class Ti_MMB_Admin {
 			'root'    => esc_url_raw( rest_url( Ti_MMB_Core::API_ROOT ) ),
 			'nonce'   => wp_create_nonce( 'wp_rest' ),
 			'homeUrl' => esc_url( home_url() ),
-			'i18ln'   => $this->get_strings(),
-			'data' => $this->get_data(),
+			'i18n'    => $this->get_strings(),
+			'data'    => $this->get_data(),
 		);
 
 		return $api;
@@ -85,8 +84,10 @@ class Ti_MMB_Admin {
 	}
 
 	private function get_data() {
+
 		return array(
-			'navMenus' => wp_get_nav_menus()
+			'navMenus'     => wp_get_nav_menus(),
+			'navMenuItems' => wp_get_nav_menu_items( 'main-menu' ),
 		);
 	}
 }
