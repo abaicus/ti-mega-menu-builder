@@ -32,12 +32,15 @@ class Ti_MMB_Core {
 	 * @var null
 	 */
 	public function init() {
+		if ( ! $this->should_load() ) {
+			return;
+		}
 		$this->setup_admin();
 		$this->setup_api();
 	}
 
 	/**
-	 * Utility to check if sites library should be loaded.
+	 * Utility to check if menu builder should be loaded.
 	 *
 	 * @return bool
 	 */
@@ -69,12 +72,12 @@ class Ti_MMB_Core {
 	 * @return void
 	 */
 	private function setup_api() {
-//		require_once '.php';
-//		if ( ! class_exists( 'Themeisle_OB_Rest_Server' ) ) {
-//			return;
-//		}
-//		$api = new Themeisle_OB_Rest_Server();
-//		$api->init();
+		require_once 'ti-mmb-rest.php';
+		if ( ! class_exists( 'Ti_MMB_Rest' ) ) {
+			return;
+		}
+		$api = new Ti_MMB_Rest();
+		$api->init();
 	}
 
 	/**

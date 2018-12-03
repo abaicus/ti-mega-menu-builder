@@ -9,8 +9,9 @@ Vue.use( Vuex );
 
 export default new Vuex.Store( {
 	state: {
-		ajaxLoader: false,
+		navMenuPreview: null,
 		data: tiMmb,
+		menuMap: {}
 	},
 	actions,
 	mutations

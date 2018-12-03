@@ -17,8 +17,8 @@ class Ti_MMB_Admin {
 	 * @var null
 	 */
 	public function init() {
-		add_action( 'admin_menu', [ $this, 'add_page' ] );
-		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue' ] );
+		add_action( 'admin_menu', array( $this, 'add_page' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue' ) );
 	}
 
 	public function add_page() {
@@ -49,7 +49,7 @@ class Ti_MMB_Admin {
 
 		wp_register_script( 'ti-mmb', TI_MMB_URL . '/assets/js/app.js', array(), TI_MMB_VERSION, true );
 
-		wp_localize_script( 'ti-mmb', 'tiMmb', $this->localize_sites_library() );
+		wp_localize_script( 'ti-mmb', 'tiMmb', $this->localize() );
 
 		wp_enqueue_script( 'ti-mmb' );
 	}
@@ -59,13 +59,13 @@ class Ti_MMB_Admin {
 	 *
 	 * @return array
 	 */
-	private function localize_sites_library() {
+	private function localize() {
 		$api = array(
-			'root'    => esc_url_raw( rest_url( Ti_MMB_Core::API_ROOT ) ),
-			'nonce'   => wp_create_nonce( 'wp_rest' ),
-			'homeUrl' => esc_url( home_url() ),
-			'i18n'    => $this->get_strings(),
-			'data'    => $this->get_data(),
+			'root'     => esc_url_raw( rest_url( Ti_MMB_Core::API_ROOT ) ),
+			'nonce'    => wp_create_nonce( 'wp_rest' ),
+			'homeUrl'  => esc_url( home_url() ),
+			'strings'  => $this->get_strings(),
+			'navMenus' => wp_get_nav_menus(),
 		);
 
 		return $api;
@@ -78,16 +78,15 @@ class Ti_MMB_Admin {
 	 */
 	private function get_strings() {
 		return array(
-			'preview_btn' => __( 'Preview', 'textdomain' ),
-			'import_btn'  => __( 'Import', 'textdomain' ),
+			'createMenu' => __( 'Create menu', 'textdomain' ),
+			'newMenu'    => __( 'New menu', 'textdomain' ),
+			'selectMenu' => __( 'Select a menu', 'textdomain' ),
+			'menuName'   => __( 'Enter a menu name...', 'textdomain' ),
 		);
 	}
 
 	private function get_data() {
 
-		return array(
-			'navMenus'     => wp_get_nav_menus(),
-			'navMenuItems' => wp_get_nav_menu_items( 'main-menu' ),
-		);
+		return array();
 	}
 }
